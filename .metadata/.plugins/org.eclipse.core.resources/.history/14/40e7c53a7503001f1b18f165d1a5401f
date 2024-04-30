@@ -1,0 +1,12 @@
+package com.ezen.test.service;
+
+import org.springframework.stereotype.Service;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Service
+public class CommentServiceImpl implements CommentService{
+
+	private final CommentDAO cdao;
+}
