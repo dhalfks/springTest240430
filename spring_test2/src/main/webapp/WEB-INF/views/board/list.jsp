@@ -6,7 +6,7 @@
 <div class="container-md">
 	<h1>Board List Page</h1>
 	<!-- 검색라인 -->
-	<%-- <form action="/board/list" method="get" class="row g-3">
+	<form action="/board/list" method="get" class="row g-3">
       <div class="input-group mb-3">
         <select class="form-select" name="type" id="autoSizingSelect">
           <option ${ph.pgvo.type == null ? 'selected' : ''} >Choose...</option>
@@ -30,7 +30,7 @@
           </span>
         </button>
       </div>
-    </form> --%>
+    </form>
 	
 	<table class="table table-hover">
 		<thead>
@@ -59,30 +59,27 @@
 		</tbody>
 	</table>
 	
-	<!-- 페이지네이션라인  li disabled -->
-<%-- 	<nav aria-label="Page navigation example">
+	<!-- 페이지네이션라인  li disabled  active -->
+	<nav aria-label="Page navigation example">
       <ul class="pagination justify-content-center">
-      	<c:if test="${ph.prev }">
-        <li class="page-item">
+        <li class="page-item ${ph.prev eq false ? 'disabled' : ''}">
           <a class="page-link" href="/board/list?pageNo=${ph.startPage-1 }&qty=${ph.pgvo.qty}&type=${ph.pgvo.type}&keyword=${ph.pgvo.keyword}" aria-label="Previous">
             <span aria-hidden="true">«</span>
           </a>
         </li>
-        </c:if>
-        
+          
         <c:forEach begin="${ph.startPage }" end="${ph.endPage }" var="i">
-        	<li class="page-item"><a class="page-link" href="/board/list?pageNo=${i}&qty=${ph.pgvo.qty}&type=${ph.pgvo.type}&keyword=${ph.pgvo.keyword}">${i }</a></li>
+        	<li class="page-item ${ph.pgvo.pageNo eq i ? 'active' : '' }"><a class="page-link" href="/board/list?pageNo=${i}&qty=${ph.pgvo.qty}&type=${ph.pgvo.type}&keyword=${ph.pgvo.keyword}">${i }</a></li>
         </c:forEach>
           
-        <c:if test="${ph.next }">        
-        <li class="page-item">
+        <li class="page-item ${ph.next eq false ? 'disabled' : ''}">
           <a class="page-link" href="/board/list?pageNo=${ph.endPage+1 }&qty=${ph.pgvo.qty}&type=${ph.pgvo.type}&keyword=${ph.pgvo.keyword}" aria-label="Next">
             <span aria-hidden="true">»</span>
           </a>
         </li>
-        </c:if>
+       
       </ul>
-    </nav> --%>
+    </nav>
 	
 </div>
 <jsp:include page="../layout/footer.jsp" />

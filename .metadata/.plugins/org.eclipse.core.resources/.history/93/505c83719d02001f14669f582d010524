@@ -1,6 +1,0 @@
-package com.ezen.test.domain;
-
-public class PagingVO {
-	//select * from board limit 0,10;
-
-}

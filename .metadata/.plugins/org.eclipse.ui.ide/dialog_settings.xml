@@ -103,10 +103,16 @@
 		<item value="org.springsource.sts:3.9.18.202109140905-RELEASE"/>
 	</list>
 	<section name="SaveAsDialogSettings">
-		<item key="DIALOG_X_ORIGIN" value="706"/>
-		<item key="DIALOG_Y_ORIGIN" value="162"/>
-		<item key="DIALOG_WIDTH" value="525"/>
-		<item key="DIALOG_HEIGHT" value="580"/>
+		<item key="DIALOG_X_ORIGIN" value="685"/>
+		<item key="DIALOG_Y_ORIGIN" value="262"/>
+		<item key="DIALOG_WIDTH" value="597"/>
+		<item key="DIALOG_HEIGHT" value="612"/>
+		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>
+	</section>
+	<section name="CleanDialogSettings">
+		<item key="TOGGLE_SELECTED" value="false"/>
+		<item key="DIALOG_WIDTH" value="500"/>
+		<item key="DIALOG_HEIGHT" value="389"/>
 		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>
 	</section>
 </section>
