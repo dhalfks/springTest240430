@@ -4,10 +4,13 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -36,7 +39,7 @@ public class BoardController {
 	
 	@PostMapping("/insert")
 	public String insert(BoardVO bvo, 
-			@RequestParam(name="files", required = false)MultipartFile[] files) {
+			MultipartFile[] files) {
 		List<FileVO> flist = null;
 		
 		if(files[0].getSize()>0) {
@@ -67,14 +70,22 @@ public class BoardController {
 	
 	@GetMapping({"/detail","/modify"})
 	public void detail(@RequestParam("bno")int bno, Model m) {
-		BoardVO bvo = bsv.getDetail(bno);
-		m.addAttribute("bvo", bvo);
+		BoardDTO bdto = bsv.getDetail(bno);
+		m.addAttribute("bdto", bdto);
 	}
 	
 	//RedirectAttributes : redirect 로 보내는 객체
 	@PostMapping("/modify")
-	public String modify(BoardVO bvo, RedirectAttributes re) {
-		int isOk = bsv.modify(bvo);
+	public String modify(BoardVO bvo, RedirectAttributes re,
+			@RequestParam(name="files", required = false)MultipartFile[] files) {
+		List<FileVO> flist = null;
+		
+		if(files[0].getSize() > 0) {
+			flist = fh.uploadFiles(files);
+		}
+		int isOk = bsv.update(new BoardDTO(bvo,flist));
+
+//		int isOk = bsv.modify(bvo);
 		re.addAttribute("bno", bvo.getBno());
 		return "redirect:/board/detail";
 	}
@@ -83,6 +94,13 @@ public class BoardController {
 	public String remove (@RequestParam("bno")int bno) {
 		int isOk = bsv.remove(bno);
 		return "redirect:/board/list";
+	}
+	
+	@DeleteMapping("/file/{uuid}")
+	@ResponseBody
+	public String removeFile(@PathVariable("uuid")String uuid) {
+		int isOk = bsv.removeFile(uuid);
+		return isOk > 0? "1" : "0";
 	}
 
 }
