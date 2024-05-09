@@ -21,4 +21,5 @@ public class UserVO {
 	private String regDate;
 	private String lastLogin;
 	private List<AuthVO> authList;
+	
 }

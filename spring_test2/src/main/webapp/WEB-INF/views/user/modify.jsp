@@ -1,44 +1,53 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <jsp:include page="../layout/header.jsp" />
 <div class="container-md">
 <h1>Member Modify Page</h1>
-<form action="/member/modify" method="post">
-	<div class="mb-3">
-	  <label for="i" class="form-label">ID</label>
-	  <input type="text" class="form-control" name="id" id="i" value="${ses.id }" readonly="readonly" placeholder="ID...">
-	</div><div class="mb-3">
-	  <label for="r" class="form-label">REG_DATE</label>
-	  <input type="text" class="form-control" name="reg_date" id="r" value="${ses.reg_date }" readonly="readonly" placeholder="ID...">
-	</div>
-	<div class="mb-3">
-	  <label for="l" class="form-label">Last_Login</label>
-	  <input type="text" class="form-control" name="last_login" id="l" value="${ses.last_login }" readonly="readonly" placeholder="ID...">
-	</div>
-	<div class="mb-3">
-	  <label for="p" class="form-label">PassWord</label>
-	  <input type="password" class="form-control" name="pw" id="p" placeholder="Password...">
-	</div>
-	<div class="mb-3">
-	  <label for="n" class="form-label">Name</label>
-	  <input type="text" class="form-control" name="name" id="n" value="${ses.name }" placeholder="Name...">
-	</div>
-	<div class="mb-3">
-	  <label for="e" class="form-label">E-mail</label>
-	  <input type="email" class="form-control" name="email" id="e" value="${ses.email }" placeholder="example@test.com...">
-	</div>
-	<div class="mb-3">
-	  <label for="h" class="form-label">Home</label>
-	  <input type="text" class="form-control" name="home" id="h" value="${ses.home }" placeholder="Home...">
-	</div>
-	<div class="mb-3">
-	  <label for="a" class="form-label">Age</label>
-	  <input type="text" class="form-control" name="age" id="a" value="${ses.age }" placeholder="Age...">
-	</div>
+<sec:authorize access="isAuthenticated()">
+<sec:authentication property="principal.uvo.email" var="authEmail" />   
+<sec:authentication property="principal.uvo.nickName" var="authNick" />   
+<sec:authentication property="principal.uvo.regDate" var="authRegDate" />   
+<sec:authentication property="principal.uvo.lastLogin" var="authLastLogin" />   
+<sec:authentication property="principal.uvo.authList" var="auths" /> 
+</sec:authorize>
+<form action="/user/modify" method="post">
+<input type="hidden" name="email" value="${authEmail }">
+	<div class="col">
+			<div class="card" style="width: 18rem;">
+			  <img src="/re/image/pic01.jpg" class="card-img-top" alt="...">
+			  <div class="card-body">
+			    <h5 class="card-title"><input type="text" name="nickName" value="${authNick }"></h5>
+			    <p class="card-text">${authEmail }</p>
+			    <p class="card-text"><input type="text" name="pwd" placeholder="Password..."></p>
+			    <p class="card-text"> 
+			    ( <c:forEach items="${auths }" var="authList">
+			    	${authList.auth } 
+			    </c:forEach> )
+			    </p>
+			    <p class="card-text">${authLastLogin }</p>
+			    <p class="card-text">(${authRegDate })</p>
+			    
+			    <a href="#" class="btn btn-primary">Go somewhere</a>
+			  </div>
+			</div>
+		</div>	
 	
 	<button type="submit" class="btn btn-primary">Modify</button>
-	<a href="/member/remove"><button type="button" class="btn btn-danger">delete</button></a>
+	<button type="button" class="btn btn-danger" id="delBtn">delete</button>
 </form>
 
 </div>
+
+<script type="text/javascript">
+document.getElementById('delBtn').addEventListener('click',()=>{
+    let check = confirm("정말 탈퇴하시겠습니까?");
+    //confirm => treu / false
+    console.log(check);
+    if(check){
+        location.href="/user/remove";
+    }
+})
+</script>
 <jsp:include page="../layout/footer.jsp" />
